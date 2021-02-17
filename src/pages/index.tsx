@@ -1,11 +1,22 @@
+import { useQuery } from '@apollo/client';
 import { AddIcon } from '@chakra-ui/icons';
-import { Box, Flex, Heading, IconButton, Input } from '@chakra-ui/react';
+import {
+  Box,
+  Flex,
+  Heading,
+  IconButton,
+  Input,
+  Spinner,
+} from '@chakra-ui/react';
 import React, { useRef } from 'react';
+import { TODOS } from 'types';
 
 import Todo from '../components/Todo';
+import { GET_ALL_TODOS } from '../queries/query';
 
 const Home: React.FC = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const { loading, data } = useQuery<TODOS>(GET_ALL_TODOS);
 
   return (
     <Box h="100vh" p={5}>
@@ -27,7 +38,13 @@ const Home: React.FC = () => {
           <Input type="text" placeholder="Todoを入力してね!" ref={inputRef} />
           <IconButton icon={<AddIcon />} aria-label="Add Button" />
         </Flex>
-        <Todo todo="Hello World" completed />
+        {loading ? (
+          <Spinner />
+        ) : (
+          data?.todos.map(({ id, todo, isCompleted }) => (
+            <Todo key={id} todo={todo} completed={isCompleted} />
+          ))
+        )}
       </Flex>
     </Box>
   );
