@@ -17,3 +17,12 @@ export const UPDATE_TODO = gql`
     }
   }
 `;
+
+export const ADD_TODO = gql`
+  mutation($todo: String) {
+    addTodo(todo: $todo) {
+      todo
+      isCompleted
+    }
+  }
+`;
