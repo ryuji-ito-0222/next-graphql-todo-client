@@ -4,13 +4,13 @@ import React from 'react';
 
 type TodoProps = {
   todo: string;
-  completed: boolean;
+  isCompleted: boolean;
 };
 
-const Todo: React.FC<TodoProps> = ({ todo, completed = false }) => (
+const Todo: React.FC<TodoProps> = ({ todo, isCompleted }) => (
   <Flex justify="space-between">
     <Text>{todo}</Text>
-    <Text>{completed ? <CheckIcon /> : <TimeIcon />}</Text>
+    <Text>{isCompleted ? <CheckIcon /> : <TimeIcon />}</Text>
   </Flex>
 );
 

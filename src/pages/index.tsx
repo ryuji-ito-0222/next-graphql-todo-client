@@ -17,6 +17,7 @@ import { GET_ALL_TODOS } from '../queries/query';
 const Home: React.FC = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const { loading, data } = useQuery<TODOS>(GET_ALL_TODOS);
+  console.log(data);
 
   return (
     <Box h="100vh" p={5}>
@@ -42,7 +43,7 @@ const Home: React.FC = () => {
           <Spinner />
         ) : (
           data?.todos.map(({ id, todo, isCompleted }) => (
-            <Todo key={id} todo={todo} completed={isCompleted} />
+            <Todo key={id} todo={todo} isCompleted={isCompleted} />
           ))
         )}
       </Flex>
