@@ -1,4 +1,4 @@
-import { CheckIcon, TimeIcon } from '@chakra-ui/icons';
+import { CheckIcon } from '@chakra-ui/icons';
 import { Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 
@@ -8,9 +8,11 @@ type TodoProps = {
 };
 
 const Todo: React.FC<TodoProps> = ({ todo, isCompleted }) => (
-  <Flex justify="space-between">
-    <Text>{todo}</Text>
-    <Text>{isCompleted ? <CheckIcon /> : <TimeIcon />}</Text>
+  <Flex justify="space-between" mb={2}>
+    <Text fontSize="20px" fontWeight="bold">
+      {todo}
+    </Text>
+    {isCompleted ? <CheckIcon /> : <Text>Not Done</Text>}
   </Flex>
 );
 
