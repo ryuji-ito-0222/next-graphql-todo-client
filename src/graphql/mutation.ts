@@ -10,7 +10,7 @@ export const DELETE_TODO = gql`
 `;
 
 export const UPDATE_TODO = gql`
-  mutation($id: String!, $todo: String, $isCompleted: boolean) {
+  mutation($id: ID!, $todo: String, $isCompleted: Boolean) {
     updateTodo(id: $id, todo: $todo, isCompleted: $isCompleted) {
       todo
       isCompleted

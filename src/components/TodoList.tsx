@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@apollo/client';
 import { Flex, Skeleton, Stack } from '@chakra-ui/react';
-import { DELETE_TODO } from 'graphql/mutation';
+import { DELETE_TODO, UPDATE_TODO } from 'graphql/mutation';
 import { GET_ALL_TODOS } from 'graphql/query';
 import React from 'react';
 
@@ -13,13 +13,29 @@ const TodoList: React.FC = () => {
     refetchQueries: [{ query: GET_ALL_TODOS }],
     awaitRefetchQueries: true,
   });
+  const [updateTodo] = useMutation(UPDATE_TODO, {
+    refetchQueries: [{ query: GET_ALL_TODOS }],
+    awaitRefetchQueries: true,
+  });
 
-  const handleClick = async (id: string) => {
+  const handleDelete = async (id: string) => {
     if (error) {
       alert(error.message);
     } else {
       await deleteTodo({ variables: { id } });
     }
+  };
+
+  const handleUpdate = async ({
+    id,
+    todo,
+    isCompleted,
+  }: {
+    id: string;
+    todo: string;
+    isCompleted: boolean;
+  }) => {
+    await updateTodo({ variables: { id, todo, isCompleted: !isCompleted } });
   };
 
   return (
@@ -36,7 +52,8 @@ const TodoList: React.FC = () => {
             key={id}
             todo={todo}
             isCompleted={isCompleted}
-            onClick={() => handleClick(id)}
+            onDelete={() => handleDelete(id)}
+            onUpdateIsCompleted={() => handleUpdate({ id, todo, isCompleted })}
           />
         ))
       )}

@@ -12,7 +12,8 @@ const TodoInput: React.FC = () => {
     awaitRefetchQueries: true,
   });
 
-  const handleClick = async () => {
+  const handleClick = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (input.trim()) {
       await addTodo({ variables: { todo: input } });
       setInput('');
@@ -22,7 +23,7 @@ const TodoInput: React.FC = () => {
   return (
     <>
       {error ? <Text>Oh no Error!!!</Text> : null}
-      <Flex>
+      <Flex as="form">
         <Input
           type="text"
           placeholder="Todoを入力してね!"
@@ -30,6 +31,8 @@ const TodoInput: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
         />
         <IconButton
+          ml={1}
+          type="submit"
           icon={<AddIcon />}
           aria-label="Add Button"
           onClick={handleClick}
