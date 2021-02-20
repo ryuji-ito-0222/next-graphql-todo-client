@@ -4,29 +4,24 @@ import { Flex, IconButton, Input, Text } from '@chakra-ui/react';
 import { ADD_TODO } from 'graphql/mutation';
 import { GET_ALL_TODOS } from 'graphql/query';
 import React, { useState } from 'react';
-import { TODO } from 'types';
 
 const TodoInput: React.FC = () => {
   const [input, setInput] = useState('');
-  const [addTodo, { error }] = useMutation<{ addTodo: TODO }, { todo: string }>(
-    ADD_TODO,
-    {
-      variables: { todo: input },
-      refetchQueries: [{ query: GET_ALL_TODOS }],
-      awaitRefetchQueries: true,
-    },
-  );
+  const [addTodo, { error }] = useMutation(ADD_TODO, {
+    refetchQueries: [{ query: GET_ALL_TODOS }],
+    awaitRefetchQueries: true,
+  });
 
   const handleClick = async () => {
     if (input.trim()) {
-      await addTodo();
+      await addTodo({ variables: { todo: input } });
       setInput('');
     }
   };
 
   return (
     <>
-      {error && <Text>Oh no Error!!!</Text>}
+      {error ? <Text>Oh no Error!!!</Text> : null}
       <Flex>
         <Input
           type="text"

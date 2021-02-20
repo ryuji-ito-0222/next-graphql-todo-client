@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const DELETE_TODO = gql`
-  mutation($id: String!) {
+  mutation($id: ID!) {
     deleteTodo(id: $id) {
       todo
       isCompleted
