@@ -21,20 +21,17 @@ const TodoList: React.FC = () => {
   const handleDelete = async (id: string) => {
     if (error) {
       alert(error.message);
-    } else {
-      await deleteTodo({ variables: { id } });
     }
+    // eslint-disable-next-line no-restricted-globals
+    const answer = confirm('削除しますか？');
+    if (answer) await deleteTodo({ variables: { id } });
   };
 
-  const handleUpdate = async ({
-    id,
-    todo,
-    isCompleted,
-  }: {
-    id: string;
-    todo: string;
-    isCompleted: boolean;
-  }) => {
+  const handleUpdate = async (
+    id: string,
+    todo: string,
+    isCompleted: boolean,
+  ) => {
     await updateTodo({ variables: { id, todo, isCompleted: !isCompleted } });
   };
 
@@ -53,7 +50,7 @@ const TodoList: React.FC = () => {
             todo={todo}
             isCompleted={isCompleted}
             onDelete={() => handleDelete(id)}
-            onUpdateIsCompleted={() => handleUpdate({ id, todo, isCompleted })}
+            onUpdateIsCompleted={() => handleUpdate(id, todo, isCompleted)}
           />
         ))
       )}

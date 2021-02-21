@@ -6,7 +6,7 @@ import { AppProps } from 'next/app';
 import React from 'react';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:8001/graphql',
+  uri: 'http://localhost:8080/graphql',
   cache: new InMemoryCache(),
 });
 
